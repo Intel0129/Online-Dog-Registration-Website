@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Registration and Vaccination Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        h2 {
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+        .form-group label {
+            flex: 1;
+            min-width: 150px;
+            font-weight: bold;
+        }
+        .form-group input, 
+        .form-group textarea, 
+        .form-group select {
+            flex: 2;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 100%;
+        }
+        input[type="radio"], input[type="checkbox"] {
+            width: auto;
+            margin-right: 5px;
+        }
+        input[type="file"] {
+            border: none;
+        }
+        .table-section table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .table-section th, .table-section td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .table-section th {
+            background-color: #007bff;
+            color: white;
+        }
+        .button {
+            text-align: center;
+            margin-top: 20px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .thank-you {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            border-radius: 8px;
+        }
+    </style>
+    <script>
+        function validateForm(event) {
+            event.preventDefault();
+            const requiredFields = ['last-name', 'first-name', 'contact', 'pet-name'];
+            for (let field of requiredFields) {
+                if (document.getElementById(field).value.trim() === '') {
+                    alert('Please fill out all required fields.');
+                    return false;
+                }
+            }
+            document.querySelector('.form-container').style.display = 'none';
+            document.querySelector('.thank-you').style.display = 'block';
+        }
+
+        function goToHomePage() {
+            window.location.href = 'index.html'; // Replace with your homepage URL
+        }
+    </script>
+</head>
+<body>
+    <div class="container form-container">
+        <h1>Dog Registration and Vaccination Form</h1>
+        <form onsubmit="validateForm(event)">
+            <!-- Owner Information -->
+            <h2>Owner Information</h2>
+            <div class="form-group">
+                <label for="last-name">Last Name:</label>
+                <input type="text" id="last-name" name="last-name" required>
+            </div>
+            <div class="form-group">
+                <label for="first-name">First Name:</label>
+                <input type="text" id="first-name" name="first-name" required>
+            </div>
+            <div class="form-group">
+                <label for="middle-name">Middle Name:</label>
+                <input type="text" id="middle-name" name="middle-name">
+            </div>
+            <div class="form-group">
+                <label for="suffix">Suffix (if any):</label>
+                <input type="text" id="suffix" name="suffix">
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of Birth (MM/DD/YYYY):</label>
+                <input type="date" id="dob" name="dob" required>
+            </div>
+            <div class="form-group">
+                <label>Gender:</label>
+                <label><input type="radio" name="gender" value="male" required> Male</label>
+                <label><input type="radio" name="gender" value="female" required> Female</label>
+            </div>
+            <div class="form-group">
+                <label for="contact">Contact Number:</label>
+                <input type="text" id="contact" name="contact" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email">
+            </div>
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <textarea id="address" name="address" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="photo">Upload Photo of Owner and Dog:</label>
+                <input type="file" id="photo" name="photo" accept="image/*" required>
+            </div>
+
+            <!-- Pet Information -->
+            <h2>Pet Information</h2>
+            <div class="form-group">
+                <label for="pet-name">Name:</label>
+                <input type="text" id="pet-name" name="pet-name" required>
+            </div>
+            <div class="form-group inline-group">
+                <label>Pet Origin:</label>
+                <label><input type="checkbox" name="origin" value="local"> Local</label>
+                <label><input type="checkbox" name="origin" value="others"> Others</label>
+            </div>
+            <div class="form-group inline-group">
+                <label>Habitat:</label>
+                <label><input type="checkbox" name="habitat" value="caged"> Caged</label>
+                <label><input type="checkbox" name="habitat" value="leashed"> Leashed</label>
+                <label><input type="checkbox" name="habitat" value="free"> Free Roaming</label>
+                <label><input type="checkbox" name="habitat" value="houseonly"> House Only</label>
+                <label><input type="checkbox" name="habitat" value="others"> Others</label>
+            </div>
+            <div class="form-group inline-group">
+                <label>Species:</label>
+                <label><input type="checkbox" name="species" value="canine"> Canine</label>
+                <label><input type="checkbox" name="species" value="feline"> Feline</label>
+            </div>
+            <div class="form-group">
+                <label for="breed">Breed:</label>
+                <input type="text" id="breed" name="breed">
+            </div>
+            <div class="form-group">
+                <label for="pet-dob">Date of Birth:</label>
+                <input type="date" id="pet-dob" name="pet-dob">
+            </div>
+            <div class="form-group inline-group">
+                <label>Sex:</label>
+                <label><input type="checkbox" name="sex" value="male"> Male</label>
+                <label><input type="checkbox" name="sex" value="female"> Female</label>
+            </div>
+            <div class="form-group">
+                <label for="color">Color/Markings:</label>
+                <input type="text" id="color" name="color">
+            </div>
+            <div class="form-group inline-group">
+                <label>Reproductive Status:</label>
+                <label><input type="checkbox" name="status" value="intact"> Intact</label>
+                <label><input type="checkbox" name="status" value="spayed"> Spayed (Laygit)</label>
+                <label><input type="checkbox" name="status" value="castrated"> Castrated (Kapon)</label>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="button">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="container thank-you">
+        <h1>Thank You!</h1>
+        <p>Your dog's registration has been submitted successfully.</p>
+        <button onclick="goToHomePage()">Go Back to Homepage</button>
+    </div>
+</body>
+</html>

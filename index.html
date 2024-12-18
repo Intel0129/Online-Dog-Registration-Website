@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Dog Registration</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=close" />
+
+    <!-- Styles -->
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Navbar Styling */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #01cff9;
+            padding: 1rem 2rem;
+        }
+
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            display: flex;
+            align-items: center;
+        }
+
+        nav .logo i {
+            margin-right: 0.5rem;
+            font-size: 1.8rem;
+            color: #fff;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ff9800;
+        }
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: url('image/dog-and-owner.jpg.jfif') center/cover no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+            flex-direction: column;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero .buttons button {
+            padding: 0.8rem 1.5rem;
+            margin: 0 0.5rem;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #ff9800;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .hero .buttons button:hover {
+            background-color: #e68a00;
+        }
+         /* Modal Styling */
+         .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 2rem;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 1rem;
+        }
+
+        .modal-content form input {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .modal-content form button {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: #01cff9;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .modal-content form button:hover {
+            background-color: #019db6;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            color: #333;
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .buttons button {
+                margin: 0.5rem 0;
+            }
+        }
+    
+    /* Center the Team Section */
+    #about .team {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+    }
+
+    .team-member {
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+
+    .team-member:hover {
+        transform: translateY(-10px);
+    }
+
+    .team-photo {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 1rem;
+        transition: transform 0.3s ease;
+    }
+
+    .team-member:hover .team-photo {
+        transform: scale(1.1);
+    }
+
+    .team-member h4 {
+        font-size: 1.2rem;
+        color: #333;
+        margin-bottom: 0.5rem;
+    }
+
+    .team-member p {
+        color: #555;
+        font-size: 1rem;
+    }
+   
+    .team-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh; /* Takes full viewport height */
+        text-align: center;
+    }
+
+    .team-members {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 2rem;
+        padding: 0 1rem;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .team-member {
+        text-align: center;
+        overflow: hidden;
+        position: relative;
+        transition: transform 0.5s ease-out;
+    }
+
+    .team-member:hover {
+        transform: translateX(20px);
+    }
+
+    .team-photo {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 1rem;
+        transition: transform 0.5s ease-out;
+    }
+
+    .team-member:hover .team-photo {
+        transform: scale(1.1);
+    }
+
+        /* Section Styling */
+        section {
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        section p {
+            font-size: 1rem;
+            color: #000000;
+        }
+
+        .services, .contact {
+            background-color: #ffffff;
+        }
+
+        /* Footer Styling */
+        footer {
+            background-color: #01cff9;
+            color: #fff;
+            text-align: center; 
+            padding: 1rem;
+        }
+        /* Back to Top Button Styling */
+#backToTop {
+    display: none; /* Hidden by default */
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+    font-size: 2rem;
+    background-color: #01cff9;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    padding: 0.5rem 0.7rem;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+#backToTop:hover {
+    background-color: #019db6;
+}
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav ul {
+                flex-direction: column;
+                margin-top: 1rem;
+            }
+
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .buttons button {
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">
+            <img src="image/logo.png" alt="Logo" style="height: 40px; margin-right: 10px;">
+            Online Dog Registration
+        </div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+        </ul>
+    </nav>
+    <!-- Sections like #home, #about, #services, and #contact are already present -->
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav ul li a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1); // Remove the '#' symbol
+                const targetElement = document.getElementById(targetId);
+    
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+    
+    <!-- Hero Section -->
+    <div id="home" class="hero">
+        <h1>Register Your Dog Online <br> Quick, Easy, and Secure</h1>
+        <p>Welcome to Online Dog Registration, your one-stop solution for hassle-free dog registration. <br> Ensure your pet complies with local laws and gets the recognition they deserve!</p>
+        <div class="buttons">
+            <button onclick="showModal('loginModal')">Log In</button>
+            <button onclick="showModal('signupModal')">Sign Up</button>
+        </div>
+    </div>
+
+     <!-- Log In Modal -->
+     <div id="loginModal" class="modal">
+         <span class="close-btn" onclick="closeModal('loginModal')">&times;</span>
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('loginModal')">&times;</span>
+            <h2>Log In</h2>
+            <form onsubmit="redirectToRegistration(event)">
+                <input type="email" name="email" placeholder="Email" required><br>
+                <input type="password" name="password" placeholder="Password" required><br>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+    
+
+    <!-- Sign Up Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('signupModal')">&times;</span>
+            <h2>Sign Up</h2>
+            <form onsubmit="redirectToRegistration(event)">
+                <input type="text" name="username" placeholder="Username" required><br>
+                <input type="email" name="email" placeholder="Email" required><br>
+                <input type="password" name="password" placeholder="Password" required><br>
+                <button type="submit">Signup</button>
+            </form>            
+        </div>
+    </div>
+
+    <!-- JavaScript for Modal -->
+    <script>
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = "flex";
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const loginModal = document.getElementById('loginModal');
+            const signupModal = document.getElementById('signupModal');
+            if (event.target === loginModal) {
+                loginModal.style.display = "none";
+            } else if (event.target === signupModal) {
+                signupModal.style.display = "none";
+            }
+        }
+    </script>
+
+    <!-- JavaScript for Modal -->
+    <script>
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = "flex";
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        function redirectToRegistration(event) {
+            event.preventDefault(); // Prevent default form submission
+            window.location.href = "dog_registration.html"; // Redirect to the registration page
+        }
+    </script>
+
+<section id="about" style="padding: 4rem 1rem; text-align: center; background-color: #f7f7f7;">
+    <h2 style="font-size: 2.5rem; margin-bottom: 1rem; color: #333;">About Us</h2>
+    <p style="font-size: 1.1rem; color: #444; line-height: 1.6; margin-bottom: 1.5rem; max-width: 900px; margin: 0 auto;">
+        Welcome to <strong>Online Dog Registration</strong>, your trusted partner in dog registration! We’ve designed a simple and efficient platform to help dog owners register their pets, whether for legal compliance, breeder records, or community involvement.
+    </p>
+    
+    <p style="font-size: 1.1rem; color: #444; line-height: 1.6; margin-bottom: 1.5rem; max-width: 900px; margin: 0 auto;">
+        Our mission is to make dog registration a smooth, quick, and accessible process for every pet owner. We ensure your dog’s information is securely stored, up-to-date, and easily accessible whenever needed.
+    </p>
+    
+    <p style="font-size: 1.1rem; color: #444; line-height: 1.6; margin-bottom: 1.5rem; max-width: 900px; margin: 0 auto;">
+        Founded in <strong>2024</strong>, we are a team of dog lovers and tech experts with one goal: to simplify the registration process while keeping your pet’s information safe. Your dog is a cherished family member, and we ensure they are recognized in official records.
+    </p>
+    <br>
+    <br>
+    <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: #333;">Why Register Your Dog with Us?</h3>
+    <ul style="list-style-type: none; padding: 0; text-align: left; margin: 0 auto; max-width: 800px;">
+        <li style="font-size: 1.1rem; color: #555; margin-bottom: 1rem;">
+            <strong>Quick & Easy:</strong> Fast and simple online registration.
+        </li>
+        <li style="font-size: 1.1rem; color: #555; margin-bottom: 1rem;">
+            <strong>Secure & Reliable:</strong> We prioritize privacy and security for your pet’s data.
+        </li>
+        <li style="font-size: 1.1rem; color: #555; margin-bottom: 1rem;">
+            <strong>Convenient Access:</strong> Easily manage and update your dog’s registration info.
+        </li>
+        <li style="font-size: 1.1rem; color: #555; margin-bottom: 1rem;">
+            <strong>Official Records:</strong> Ensure your dog is properly registered for events and community activities.
+        </li>
+    </ul>
+
+    <p style="font-size: 1.1rem; color: #444; line-height: 1.6; margin-bottom: 1.5rem; max-width: 900px; margin: 0 auto;">
+        Whether you're a first-time dog owner or a breeder, we're here to help every step of the way. Join the growing community of responsible pet owners who trust us with their registration needs.
+    </p>
+    
+    <p><a href="#contact" style="color: #01cff9; font-weight: bold; text-decoration: none;">Contact Us</a> if you have any questions or need more information.</p>
+</section>
+
+<style>
+    /* Basic page styling */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f7f7f7;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: #333;
+    }
+
+    /* Meet Our Team Section */
+    .team {
+        padding: 4rem 1rem;
+        text-align: center;
+        background-color: #f1f1f1; /* Grey background */
+        color: #333; /* Dark text color for contrast */
+    }
+
+    .team p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        color: #666;
+    }
+
+    .team-container {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+
+    .team-card {
+        max-width: 300px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+
+    .team-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .team-card h3 {
+        font-size: 1.5rem;
+        margin: 1rem 0;
+        color: #333;
+    }
+
+    .team-card p {
+        padding: 0 1rem;
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 1.5rem;
+    }
+
+    .team-card:hover {
+        transform: translateY(-10px);
+    }
+
+</style>
+
+<!-- Meet Our Team Section -->
+<section id="team" class="team">
+    <h2>Meet Our Team</h2>
+    <p>Our team is dedicated to providing the best care for your furry friends. Get to know the professionals who will be taking care of your pets.</p>
+    
+    <div class="team-container">
+        <!-- Team Member 1 -->
+        <div class="team-card">
+            <img src="image/team1.jfif" alt="Team Member 1">
+            <h3>Alainee Ysabella Deblois</h3>
+            <p>Head Groomer</p>
+            <p>Jane is an experienced groomer with over 10 years of experience in making dogs look their best. Her passion for animals is what drives her every day.</p>
+        </div>
+
+        <!-- Team Member 2 -->
+        <div class="team-card">
+            <img src="image/team2.jfif" alt="Team Member 2">
+            <h3>Angelo Dominguiano</h3>
+            <p>Veterinary Specialist</p>
+            <p>John is a trained veterinary specialist dedicated to providing top-notch health care for dogs. He ensures that every pet gets the care they deserve.</p>
+        </div>
+
+        <!-- Team Member 3 -->
+        <div class="team-card">
+            <img src="image/team3.jfif" alt="Team Member 3">
+            <h3>Wendy Altea Gaviola</h3>
+            <p>Dog Trainer</p>
+            <p>Emily brings a wealth of knowledge and a gentle approach to dog training. She helps dogs build positive behaviors and stronger relationships with their owners.</p>
+        </div>
+    </div>
+</section>
+
+
+<style>
+    /* Basic page styling */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f7f7f7;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: #333;
+    }
+
+    /* Services Section */
+    .services {
+        padding: 4rem 1rem;
+        text-align: center;
+        background-color: #fff;
+    }
+
+    .services p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        color: #666;
+    }
+
+    .service-container {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+
+    .service-card {
+        max-width: 300px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+
+    .service-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .service-card h3 {
+        font-size: 1.5rem;
+        margin: 1rem 0;
+        color: #333;
+    }
+
+    .service-card p {
+        padding: 0 1rem;
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 1.5rem;
+    }
+
+    .service-card:hover {
+        transform: translateY(-10px);
+    }
+
+    /* Contact Section */
+    .contact {
+        padding: 4rem 1rem;
+        text-align: center;
+        background-color: #f1f1f1;
+    }
+
+    .contact p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        color: #666;
+    }
+
+    .contact form {
+        max-width: 500px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact input, .contact textarea {
+        width: 100%;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        font-size: 1rem;
+    }
+
+    .contact button {
+        padding: 1rem;
+        background-color: #01cff9;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    .contact button:hover {
+        background-color: #009cb3;
+    }
+
+    .contact a {
+        color: #01cff9;
+        text-decoration: none;
+    }
+
+    .contact a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<style>
+    /* Basic page styling */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f7f7f7;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: #333;
+    }
+
+    /* Services Section */
+    .services {
+        padding: 4rem 1rem;
+        text-align: center;
+        background-color: #f1f1f1; /* Grey background */
+        color: #333; /* Dark text color for contrast */
+    }
+
+    .services p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        color: #666; /* Adjust text color for readability */
+    }
+
+    .service-container {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+
+    .service-card {
+        max-width: 300px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+
+    .service-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .service-card h3 {
+        font-size: 1.5rem;
+        margin: 1rem 0;
+        color: #333;
+    }
+
+    .service-card p {
+        padding: 0 1rem;
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 1.5rem;
+    }
+
+    .service-card:hover {
+        transform: translateY(-10px);
+    }
+
+    /* Contact Section */
+    .contact {
+        padding: 4rem 1rem;
+        text-align: center;
+        background-color: #f1f1f1;
+    }
+
+    .contact p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        color: #666;
+    }
+
+    .contact form {
+        max-width: 500px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact input, .contact textarea {
+        width: 100%;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        font-size: 1rem;
+    }
+
+    .contact button {
+        padding: 1rem;
+        background-color: #01cff9;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    .contact button:hover {
+        background-color: #009cb3;
+    }
+
+    .contact a {
+        color: #01cff9;
+        text-decoration: none;
+    }
+
+    .contact a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<!-- Services Section -->
+<section id="services" class="services">
+    <h2>Our Services</h2>
+    <p>We offer a variety of services to ensure your dog is happy, healthy, and well-cared for. Here’s a closer look at what we offer:</p>
+    
+    <div class="service-container">
+        <!-- Service 1: Grooming -->
+        <div class="service-card">
+            <img src="image/grooming.jpg" alt="Grooming Service">
+            <h3>Grooming</h3>
+            <p>Keep your dog looking their best with our professional grooming services. We offer baths, trims, and styling to keep your furry friend clean and comfortable.</p>
+        </div>
+
+        <!-- Service 2: Training -->
+        <div class="service-card">
+            <img src="image/training.jfif" alt="Training Service">
+            <h3>Training</h3>
+            <p>Our training programs are designed to help your dog learn basic obedience, socialization, and even fun tricks. Let us guide your dog to becoming a well-behaved companion.</p>
+        </div>
+
+        <!-- Service 3: Health Checkups -->
+        <div class="service-card">
+            <img src="image/healthcheckups.jpg" alt="Health Checkup">
+            <h3>Health Checkups</h3>
+            <p>Ensure your dog stays healthy with our routine health checkups. We offer vaccinations, parasite prevention, and overall wellness exams to keep your pet in top shape.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="contact">
+    <h2>Contact Us</h2>
+    <p>If you have any questions, concerns, or need assistance with dog registration or our services, feel free to reach out to us. We’d love to hear from you!</p>
+    
+    <div>
+        <form action="mailto:info@doglover.com" method="POST" enctype="multipart/form-data">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+    
+    <p style="margin-top: 2rem;">Alternatively, you can reach us at:</p>
+    <p>Email: <a href="mailto:PuroLegazpi@gmail.com">PuroLegazpi@gmail.com</a></p>
+    <p>Phone: <a href="tel:09275651412">09275651412</a></p>
+</section>
+
+
+
+       <!-- Back to Top Button -->
+       <button id="backToTop" title="Go to top">&#8679;</button>
+
+
+  <script>
+        // Show the button when scrolled down 100px
+        const backToTopButton = document.getElementById('backToTop');
+    
+        window.onscroll = function () {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                backToTopButton.style.display = "block";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        };
+    
+        // Scroll back to the top when the button is clicked
+        backToTopButton.onclick = function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // Smooth scrolling
+            });
+        };
+    </script>
+
+   <!-- Footer -->
+<footer style="background-color: #333; color: #fff; padding: 2rem 0; font-family: 'Poppins', sans-serif;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; text-align: left;">
+        <!-- About Section -->
+        <div style="flex: 1; min-width: 250px; margin: 1rem;">
+            <h3 style="color: #ff9800;">Dog Registration</h3>
+            <p style="line-height: 1.8; font-size: 0.9rem;">
+               The goal of this project was to design and develop a system for identifying pets. 
+               In order to improve the public safety and enhance the identification of pets.
+            </p>
+        </div>
+
+        <!-- Get In Touch Section -->
+        <div style="flex: 1; min-width: 250px; margin: 1rem;">
+            <h3 style="color: #ff9800;">Get In Touch</h3>
+            <p style="line-height: 1.8; font-size: 0.9rem;">
+                Brgy.59 Puro Legazpi City<br>
+                Phone: 09275651412<br>
+                Email: PuroLegazpi@gmail.com
+            </p>
+            <div>
+                <a href="#" style="margin-right: 10px; color: #fff;"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" style="margin-right: 10px; color: #fff;"><i class="fab fa-twitter"></i></a>
+                <a href="#" style="margin-right: 10px; color: #fff;"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" style="color: #fff;"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+
+        <!-- Popular Links Section -->
+        <div style="flex: 1; min-width: 250px; margin: 1rem;">
+            <h3 style="color: #ff9800;">Popular Links</h3>
+            <ul style="list-style: none; padding: 0; line-height: 1.8; font-size: 0.9rem;">
+                <li><a href="#home" style="text-decoration: none; color: #fff;">> Home</a></li>
+                <li><a href="#about" style="text-decoration: none; color: #ffffff;">> About Us</a></li>
+                <li><a href="#services" style="text-decoration: none; color: #fff;">> Our Services</a></li>
+                <li><a href="#contact" style="text-decoration: none; color: #fff;">> Contact Us</a></li>
+            </ul>
+        </div>
+
+        <!-- Newsletter Section -->
+        <div style="flex: 1; min-width: 250px; margin: 1rem;">
+            <h3 style="color: #ff9800;">Newsletter</h3>
+            <form style="display: flex; flex-direction: column;">
+                <input type="text" placeholder="Your Name" style="width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: none; border-radius: 5px;">
+                <input type="email" placeholder="Your Email" style="width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: none; border-radius: 5px;">
+                <button type="submit" style="background-color: #ff9800; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer;">Submit Now</button>
+            </form>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 2rem; border-top: 1px solid #555; padding-top: 1rem; font-size: 0.9rem;">
+        <p>&copy; 2024 Online Dog Registration. All Rights Reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>
